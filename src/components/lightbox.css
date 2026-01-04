@@ -1,0 +1,23 @@
+.exif-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #fff;
+
+}
+
+.exif-value {
+  font-size: 0.8rem;
+  word-break: break-word;
+  color: #ccc;
+}
+
+/* Footer auf Smartphones ausblenden */
+@media (max-width: 768px) {
+  .lightbox-footer {
+    display: none !important;
+  }
+}
+
+.lightbox-footer .btn {
+  min-width: 150px;
+}
