@@ -1,15 +1,15 @@
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import {useCallback, useContext, useEffect, useState} from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
-import {usePhotos} from "../hooks/usePhotos.tsx";
-import {LightboxContext} from "../context/GalleryContext.tsx";
+import { usePhotos } from "../hooks/usePhotos.tsx";
+import { LightboxContext } from "../context/GalleryContext.tsx";
 
-import './lightbox.css'
+import "./lightbox.css";
 
 export default function Lightbox() {
   const photos = usePhotos();
-  const {show, setShow, index, setIndex} = useContext(LightboxContext);
+  const { show, setShow, index, setIndex } = useContext(LightboxContext);
 
   const close = useCallback(() => {
     setShow(false);
@@ -31,23 +31,23 @@ export default function Lightbox() {
         return;
       }
       switch (event.key) {
-        case 'Escape':
+        case "Escape":
           close();
           break;
-        case 'ArrowLeft':
+        case "ArrowLeft":
           prev();
           break;
-        case 'ArrowRight':
+        case "ArrowRight":
           next();
           break;
-        case ' ':
+        case " ":
           next();
           break;
       }
     };
-    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener("keydown", handleKeyDown);
     };
   }, [show, next, prev, close]);
 
@@ -77,8 +77,11 @@ export default function Lightbox() {
     }
   };
 
-
   const photo = photos[index];
+
+  const valueOrFallback = (val: string | undefined | null): string => {
+    return val?.trim() || "\u2014";
+  };
 
   return (
     <Modal show={show} onHide={close} fullscreen>
@@ -89,12 +92,8 @@ export default function Lightbox() {
       </Modal.Header>
 
       <Modal.Body className="d-flex flex-column flex-lg-row justify-content-center gap-2">
-
         {/* Photo */}
-        <div onTouchStart={onTouchStart}
-             onTouchMove={onTouchMove}
-             onTouchEnd={onTouchEnd}
-        >
+        <div onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
           <img
             src={photo.lightbox}
             alt={photo.file}
@@ -109,28 +108,28 @@ export default function Lightbox() {
         {/* EXIF-Metadata */}
         <div className="flex-row" style={{ minWidth: "240px" }}>
           <div className="exif-label">Photo was taken</div>
-          <div className="exif-value">{photo.createdate}</div>
+          <div className="exif-value">{valueOrFallback(photo.createdate)}</div>
 
           <div className="pt-1 exif-label">Body</div>
-          <div className="exif-value">{photo.cameramodelname}</div>
+          <div className="exif-value">{valueOrFallback(photo.cameramodelname)}</div>
 
           <div className="pt-1 exif-label">Lens</div>
-          <div className="exif-value">{photo.lensmodel}</div>
+          <div className="exif-value">{valueOrFallback(photo.lensmodel)}</div>
 
           <div className="pt-1 exif-label">Focal length 35mm equivalent</div>
-          <div className="exif-value">{photo.focallengthin35mmformat}</div>
+          <div className="exif-value">{valueOrFallback(photo.focallengthin35mmformat)}</div>
 
           <div className="pt-1 exif-label">Aperture</div>
-          <div className="exif-value">{photo.aperturevalue}</div>
+          <div className="exif-value">{valueOrFallback(photo.aperturevalue)}</div>
 
           <div className="pt-1 exif-label">Exposure</div>
-          <div className="exif-value">{photo.exposuretime}</div>
+          <div className="exif-value">{valueOrFallback(photo.exposuretime)}</div>
 
           <div className="pt-1 exif-label">ISO</div>
-          <div className="exif-value">{photo.iso}</div>
+          <div className="exif-value">{valueOrFallback(photo.iso)}</div>
 
           <div className="pt-1 exif-label">Flash</div>
-          <div className="exif-value">{photo.flash}</div>
+          <div className="exif-value">{valueOrFallback(photo.flash)}</div>
 
           <div className="pt-1 exif-label">Copyright</div>
           <div className="exif-value">CC BY-NC-ND</div>

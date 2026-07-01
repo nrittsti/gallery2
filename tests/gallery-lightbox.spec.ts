@@ -134,4 +134,46 @@ test.describe('Gallery and Lightbox Tests', () => {
 
     expect(duration).toBeLessThan(1000); // Unter 1 Sekunde
   });
+
+  test('Lightbox resilience: renders without crash and metadata has fallback values', async ({ page }) => {
+    await galleryPage.clickFirstGalleryImage();
+
+    const isOpen = await galleryPage.isLightboxOpen();
+    expect(isOpen).toBeTruthy();
+
+    // Navigate through several photos to exercise boundary conditions
+    // targeting a photo with known null metadata fields (index 21 has lensmodel and aperturevalue null)
+    const { total } = await galleryPage.getCurrentPhotoInfo();
+    const targetIndex = Math.min(21, total - 1);
+    for (let i = 0; i < targetIndex; i++) {
+      await galleryPage.navigateLightboxNext();
+    }
+
+    // Verify all 8 EXIF metadata fields have content (including fallback)
+    const metadata = await galleryPage.getExifMetadata();
+    const expectedLabels = [
+      'Photo was taken',
+      'Body',
+      'Lens',
+      'Focal length 35mm equivalent',
+      'Aperture',
+      'Exposure',
+      'ISO',
+      'Flash',
+      'Copyright'
+    ];
+    for (const label of expectedLabels) {
+      expect(metadata[label]).toBeDefined();
+      expect(metadata[label]!.length).toBeGreaterThan(0);
+    }
+
+    // Verify the em-dash fallback character is rendered for null metadata fields
+    const fallbackCount = await page.locator('.exif-value').filter({ hasText: '—' }).count();
+    expect(fallbackCount).toBeGreaterThan(0);
+
+    // Close via keyboard
+    await page.keyboard.press('Escape');
+    const stillOpen = await galleryPage.isLightboxOpen();
+    expect(stillOpen).toBeFalsy();
+  });
 });
