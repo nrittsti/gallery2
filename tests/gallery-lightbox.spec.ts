@@ -135,6 +135,66 @@ test.describe('Gallery and Lightbox Tests', () => {
     expect(duration).toBeLessThan(1000); // Unter 1 Sekunde
   });
 
+  test('Year filter should change gallery card count', async () => {
+    const cardCount = await galleryPage.getGalleryCardCount();
+
+    await galleryPage.clickYearFilter(2022);
+    const count2022 = await galleryPage.getGalleryCardCount();
+    expect(count2022).toBeLessThan(cardCount);
+    expect(count2022).toBe(43);
+
+    await galleryPage.clickYearFilter(2023);
+    const count2023 = await galleryPage.getGalleryCardCount();
+    expect(count2023).toBe(63);
+  });
+
+  test('Year filter links should be derived from data and include all years', async () => {
+    const yearLinks = await galleryPage.getYearFilterLinks();
+    const yearTexts = await yearLinks.allTextContents();
+    const years = yearTexts.map((t) => parseInt(t.trim()));
+    years.sort((a, b) => a - b);
+    expect(years).toEqual([2022, 2023, 2024, 2025]);
+  });
+
+  test('Lightbox correctly reflects filter changes across sessions', async () => {
+    await galleryPage.clickFirstGalleryImage();
+    const info1 = await galleryPage.getCurrentPhotoInfo();
+    expect(info1.total).toBe(69);
+
+    await galleryPage.closeLightbox();
+    await galleryPage.clickYearFilter(2022);
+    await galleryPage.clickFirstGalleryImage();
+    const info2 = await galleryPage.getCurrentPhotoInfo();
+    expect(info2.total).toBe(43);
+  });
+
+  test('Lightbox clamps index when filter changes reduce photo count', async ({ page }) => {
+    await galleryPage.clickFirstGalleryImage();
+    const info1 = await galleryPage.getCurrentPhotoInfo();
+    expect(info1.total).toBe(69);
+
+    for (let i = 0; i < 68; i++) {
+      await galleryPage.navigateLightboxNext();
+    }
+    expect((await galleryPage.getCurrentPhotoInfo()).current).toBe(69);
+
+    // Programmatically click 2022 filter through modal overlay
+    await page.evaluate(() => {
+      const links = document.querySelectorAll('nav a[role="button"]');
+      for (const link of links) {
+        if (link.textContent?.trim() === '2022') {
+          (link as HTMLElement).click();
+          break;
+        }
+      }
+    });
+
+    await page.waitForTimeout(500);
+    const infoAfter = await galleryPage.getCurrentPhotoInfo();
+    expect(infoAfter.current).toBe(43);
+    expect(infoAfter.total).toBe(43);
+  });
+
   test('Lightbox resilience: renders without crash and metadata has fallback values', async ({ page }) => {
     await galleryPage.clickFirstGalleryImage();
 

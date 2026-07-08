@@ -24,7 +24,7 @@
 #   - done: Retrospective has been completed
 
 generated: 2026-06-27
-last_updated: 2026-06-27
+last_updated: 2026-07-07
 project: Gallery
 project_key: NOKEY
 tracking_system: file-system
@@ -33,8 +33,8 @@ story_location: _bmad-output/implementation-artifacts/stories
 development_status:
   epic-1: in-progress
    1-1-metadata-safe-lightbox-rendering: done
-  1-2-filter-and-lightbox-state-synchronization: backlog
-  1-3-deterministic-photo-derivation-and-ordering: backlog
+  1-2-filter-and-lightbox-state-synchronization: done
+  1-3-deterministic-photo-derivation-and-ordering: done
   1-4-script-and-data-resilience: backlog
   epic-1-retrospective: optional
 

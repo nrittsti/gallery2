@@ -1,12 +1,12 @@
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
-import {useContext} from "react";
+import {useContext, useMemo} from "react";
 
 import {FilterContext} from "../context/GalleryContext.tsx";
+import {allPhotos, getAvailableYears} from "../utils/photos.ts";
 
 export default function Navigation() {
-  console.log("Navigation Render")
-  const availableYears = [2025, 2024, 2023, 2022]
+  const availableYears = useMemo(() => getAvailableYears(allPhotos), []);
   const {year, setYear} = useContext(FilterContext);
   const handleYearClick = (selectedYear: number | null) => {
     setYear(selectedYear);

@@ -1,6 +1,8 @@
+import type { Dispatch, SetStateAction } from "react";
+
 export interface LightboxType {
   show: boolean
-  setShow: (show: boolean) => void;
+  setShow: Dispatch<SetStateAction<boolean>>;
   index: number
-  setIndex: (index: number) => void;
+  setIndex: Dispatch<SetStateAction<number>>;
 }

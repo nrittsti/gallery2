@@ -17,12 +17,25 @@ export default function Lightbox() {
   }, [setShow, setIndex]);
 
   const next = useCallback(() => {
-    setIndex(Math.min(index + 1, photos.length - 1));
-  }, [setIndex, index, photos.length]);
+    setIndex((prev) => Math.min(prev + 1, photos.length - 1));
+  }, [setIndex, photos.length]);
 
   const prev = useCallback(() => {
-    setIndex(Math.max(index - 1, 0));
-  }, [setIndex, index]);
+    setIndex((prev) => Math.max(prev - 1, 0));
+  }, [setIndex]);
+
+  // Revalidate selection when filtered photos change
+  useEffect(() => {
+    if (!show) return;
+    if (photos.length === 0) {
+      setShow(false);
+      setIndex(0);
+    } else if (index >= photos.length) {
+      setIndex(photos.length - 1);
+    } else if (index < 0) {
+      setIndex(0);
+    }
+  }, [photos, index, show, setShow, setIndex]);
 
   // Keyboard navigation
   useEffect(() => {
@@ -78,6 +91,7 @@ export default function Lightbox() {
   };
 
   const photo = photos[index];
+  if (!photo) return null;
 
   const valueOrFallback = (val: string | undefined | null): string => {
     return val?.trim() || "\u2014";

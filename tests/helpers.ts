@@ -22,6 +22,18 @@ export class GalleryPage {
     await this.page.waitForSelector('.modal.show');
   }
 
+  async clickGalleryImageByIndex(index: number) {
+    await this.page.waitForSelector('.gallery-card');
+    const cards = await this.getGalleryCards();
+    const count = await cards.count();
+    if (index < 0 || index >= count) {
+      throw new Error(`clickGalleryImageByIndex: index ${index} out of bounds (0..${count - 1})`);
+    }
+    const card = cards.nth(index);
+    await card.locator('img').click();
+    await this.page.waitForSelector('.modal.show');
+  }
+
   async getLightboxModal() {
     return this.page.locator('.modal.show');
   }
@@ -85,6 +97,15 @@ export class GalleryPage {
     }
 
     return metadata;
+  }
+
+  async clickYearFilter(year: number) {
+    await this.page.locator('nav').getByRole('button', { name: String(year) }).click();
+    await this.page.waitForTimeout(100);
+  }
+
+  async getYearFilterLinks() {
+    return this.page.locator('nav a').filter({ hasText: /^\d{4}$/ });
   }
 
   async isLightboxOpen() {
