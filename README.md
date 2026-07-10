@@ -19,6 +19,7 @@ A modern, responsive photography gallery built with React, TypeScript, and Vite.
 - ExifTool (for metadata extraction)
 - Bash 5+
 - gawk
+- jq
 
 ### Installation
 
