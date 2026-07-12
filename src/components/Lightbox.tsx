@@ -44,18 +44,21 @@ export default function Lightbox() {
         return;
       }
       switch (event.key) {
-        case "Escape":
-          close();
-          break;
         case "ArrowLeft":
+          event.preventDefault();
           prev();
           break;
         case "ArrowRight":
+          event.preventDefault();
           next();
           break;
         case " ":
+          event.preventDefault();
           next();
           break;
+      }
+      if (event.key === "Escape") {
+        close();
       }
     };
     window.addEventListener("keydown", handleKeyDown);

@@ -9,3 +9,7 @@
 - `valueOrFallback` without `useCallback` — pre-existing issue not introduced by this change
 - Non-atomic effect-based revalidation — React lifecycle gap has negligible practical impact
 - E2E test doesn't exercise open-lightbox revalidation — modal overlay blocks simultaneous interaction
+
+## Deferred from: code review of story 2.2 (2026-07-11)
+
+- `test:e2e:ci` CI workflow uses upload-artifact@v6 for HTML report upload and upload-artifact@v4 for video upload — version mismatch is pre-existing, not introduced by this change.

@@ -12,7 +12,7 @@ import { defineConfig, devices } from '@playwright/test';
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './tests',
+  testDir: './tests/e2e',
   testIgnore: /\._\w+/,
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -27,11 +27,18 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: process.env.BASE_URL ? process.env.BASE_URL : 'http://localhost:5173',
+    baseURL: process.env.BASE_URL || 'http://localhost:4173',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
     video: 'on-first-retry',
+  },
+  /* Start the preview server before tests and kill it after. */
+  webServer: {
+    command: 'npm run preview',
+    url: 'http://localhost:4173',
+    timeout: 30000,
+    reuseExistingServer: !process.env.CI,
   },
 
   /* Configure projects for major browsers */

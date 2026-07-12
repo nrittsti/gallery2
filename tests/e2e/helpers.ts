@@ -1,7 +1,11 @@
-import { Page } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
 export class GalleryPage {
-  constructor(private page: Page) {}
+  private page: Page;
+
+  constructor(page: Page) {
+    this.page = page;
+  }
 
   async navigate() {
     await this.page.goto('/');
@@ -129,7 +133,7 @@ export class GalleryPage {
 }
 
 export async function measurePerformance<T>(
-  page: Page,
+  _page: Page,
   action: () => Promise<T>,
   description: string
 ): Promise<{ result: T; duration: number }> {

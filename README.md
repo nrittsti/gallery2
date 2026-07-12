@@ -29,19 +29,65 @@ npm install
 
 ### Development
 ```bash
-# Start vite 
-# development server
+# Start vite development server
 npm run dev
+
+# Lint code
+npm run lint
 
 # Build for production
 npm run build
 
 # Preview production build
 npm run preview
+```
 
-# Lint code
+### Verification Commands (Gate Order)
+```bash
+# 1. Lint — check code quality
 npm run lint
-``` 
+
+# 2. Build — compile TypeScript and bundle
+npm run build
+
+# 3. Unit Tests — validate components and hooks (Vitest + React Testing Library)
+npm run test:unit
+
+# 4. E2E Tests — browser-level behavior (Playwright)
+npm run test:e2e
+```
+
+The canonical verification gate order is **lint → build → unit → e2e**. CI enforces the same order. Run all gates before committing to catch regressions early.
+
+### Unit Test Commands
+```bash
+# Run all unit tests (Vitest)
+npm run test:unit
+
+# Run unit tests in watch mode for development
+npm run test:unit:watch
+```
+
+Unit tests live in `tests/unit/` and use Vitest with React Testing Library and jsdom.
+
+### E2E Test Commands
+```bash
+# Run all E2E tests (Chromium + Firefox)
+npm run test:e2e
+
+# Run in a specific browser
+npm run test:e2e:chromium
+npm run test:e2e:firefox
+
+# Open Playwright UI mode for debugging
+npm run test:e2e:ui
+npm run test:e2e:debug
+
+# View the last test report
+npm run test:e2e:report
+```
+
+E2E tests live in `tests/e2e/`. 
 
 ## 📁 Project Structure
 ```

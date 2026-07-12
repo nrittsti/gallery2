@@ -58,7 +58,7 @@ npm run test:e2e:install
 The tests use `playwright.config.ts` with the following key settings:
 
 - **baseURL**: `http://localhost:5173` (override with `BASE_URL` environment variable)
-- **Test directory**: `./tests`
+- **Test directory**: `./tests/e2e`
 - **Browsers**: Chrome and Firefox
 - **Parallel execution**: Enabled
 - **Retries**: 2 retries on CI, 0 locally
@@ -109,7 +109,7 @@ npm run dev
 BASE_URL=http://localhost:5173 npm run test:e2e
 
 # 3. Or run specific test file
-BASE_URL=http://localhost:5173 npx playwright test tests/gallery-lightbox.spec.ts
+BASE_URL=http://localhost:5173 npx playwright test tests/e2e/gallery-lightbox.spec.ts
 ```
 
 ### Browser-Specific Tests
@@ -132,7 +132,7 @@ npx playwright test --grep "Lightbox"
 npx playwright test --grep-invert "Performance"
 
 # Run a specific test
-npx playwright test tests/gallery-lightbox.spec.ts:17
+npx playwright test tests/e2e/gallery-lightbox.spec.ts:17
 ```
 
 ## Test Data Requirements
@@ -264,7 +264,7 @@ jobs:
 
 ### Adding New Tests
 
-1. Create a new `.spec.ts` file in the `tests/` directory
+1. Create a new `.spec.ts` file in the `tests/e2e/` directory
 2. Follow the existing patterns for test structure
 3. Use the helper classes from `helpers.ts` when possible
 
