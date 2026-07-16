@@ -24,7 +24,7 @@
 #   - done: Retrospective has been completed
 
 generated: 2026-06-27
-last_updated: 2026-07-11
+last_updated: 2026-07-16
 project: Gallery
 project_key: NOKEY
 tracking_system: file-system
@@ -42,14 +42,14 @@ development_status:
   2-1-standardized-verification-command-set: done
   2-2-unit-test-toolchain-integration: done
   2-3-core-behavior-unit-coverage: done
-  2-4-ci-gate-order-enforcement: ready-for-dev
-  2-5-maintenance-checklist-draft: backlog
+  2-4-ci-gate-order-enforcement: done
+  2-5-maintenance-checklist-draft: done
   epic-2-retrospective: optional
 
-  epic-3: backlog
-  3-1-upgrade-batch-framework: backlog
-  3-2-batch-a-upgrade-execution: backlog
-  3-3-batch-b-compatibility-remediation: backlog
+  epic-3: in-progress
+  3-1-upgrade-batch-framework: done
+  3-2-batch-a-upgrade-execution: done
+  3-3-batch-b-compatibility-remediation: done
   3-4-unused-dependency-removal: backlog
   3-5-deferred-major-decision-ledger: backlog
   epic-3-retrospective: optional

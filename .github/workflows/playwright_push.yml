@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 jobs:
   test:
-    name: 'Playwright Tests with DEV Server'
+    name: 'Verification Gates (lint → build → unit → e2e)'
     timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:

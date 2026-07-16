@@ -115,6 +115,10 @@ gallery/
 
 ### Adding New Photos
 
+See [`MAINTENANCE.md`](MAINTENANCE.md) for the complete maintenance and release checklist.
+
+### Adding Photos (Quick Reference)
+
 1. Place original photos in `input/[year]/[month]/` directory
   - Supported formats: JPG, HEIC
   - Naming convention: `YYYY-MM-DD_HH-MM-SS.jpg`

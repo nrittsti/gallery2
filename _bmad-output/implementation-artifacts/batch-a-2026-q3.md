@@ -7,7 +7,7 @@
 | **Batch Name** | `batch-a-2026-q3` |
 | **Owner** | Nico |
 | **Created** | 2026-07-15 |
-| **Status** | passed |
+| **Status** | merged |
 
 ## Scope — Package Changes
 
