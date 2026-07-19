@@ -1,9 +1,10 @@
 # generated: 2026-06-27
-# last_updated: 2026-06-27
+# last_updated: 2026-07-19
 # project: Gallery
 # project_key: NOKEY
 # tracking_system: file-system
 # story_location: _bmad-output/implementation-artifacts/stories
+deferred_major_ledger: _bmad-output/implementation-artifacts/deferred-major-ledger.md
 
 # STATUS DEFINITIONS:
 # ==================
@@ -28,6 +29,7 @@ last_updated: 2026-07-19
 project: Gallery
 project_key: NOKEY
 story_location: _bmad-output/implementation-artifacts/stories
+
 tracking_system: file-system
 
 development_status:
@@ -51,7 +53,7 @@ development_status:
   3-2-batch-a-upgrade-execution: done
   3-3-batch-b-compatibility-remediation: done
   3-4-unused-dependency-removal: done
-  3-5-deferred-major-decision-ledger: backlog
+  3-5-deferred-major-decision-ledger: done
   epic-3-retrospective: optional
 
   epic-4: backlog
