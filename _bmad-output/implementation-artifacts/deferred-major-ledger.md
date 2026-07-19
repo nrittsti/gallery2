@@ -2,7 +2,7 @@
 
 Created: 2026-07-19
 Source: Epic 3 — Aggressive Dependency Modernization with Safety Gates (Story 3.5)
-Baseline commit: 0ed0dbb
+Baseline commit: 69eb4f1
 
 ## Purpose
 

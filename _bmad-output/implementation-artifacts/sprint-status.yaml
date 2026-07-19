@@ -33,14 +33,14 @@ story_location: _bmad-output/implementation-artifacts/stories
 tracking_system: file-system
 
 development_status:
-  epic-1: in-progress
+  epic-1: done
   1-1-metadata-safe-lightbox-rendering: done
   1-2-filter-and-lightbox-state-synchronization: done
   1-3-deterministic-photo-derivation-and-ordering: done
   1-4-script-and-data-resilience: done
   epic-1-retrospective: optional
 
-  epic-2: in-progress
+  epic-2: done
   2-1-standardized-verification-command-set: done
   2-2-unit-test-toolchain-integration: done
   2-3-core-behavior-unit-coverage: done
@@ -56,8 +56,8 @@ development_status:
   3-5-deferred-major-decision-ledger: done
   epic-3-retrospective: optional
 
-  epic-4: backlog
-  4-1-final-baseline-re-verification: backlog
+  epic-4: in-progress
+  4-1-final-baseline-re-verification: done
   4-2-regression-burn-down: backlog
   4-3-maintenance-checklist-publication: backlog
   4-4-operational-handoff-snapshot: backlog
