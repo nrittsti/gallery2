@@ -1,9 +1,9 @@
 # generated: 2026-06-27
-# last_updated: 2026-07-19
+# last_updated: 2026-07-24
 # project: Gallery
 # project_key: NOKEY
 # tracking_system: file-system
-# story_location: _bmad-output/implementation-artifacts/stories
+# story_location: _bmad-output/implementation-artifacts
 deferred_major_ledger: _bmad-output/implementation-artifacts/deferred-major-ledger.md
 
 # STATUS DEFINITIONS:
@@ -48,7 +48,7 @@ development_status:
   2-5-maintenance-checklist-draft: done
   epic-2-retrospective: optional
 
-  epic-3: in-progress
+  epic-3: done
   3-1-upgrade-batch-framework: done
   3-2-batch-a-upgrade-execution: done
   3-3-batch-b-compatibility-remediation: done
@@ -58,7 +58,7 @@ development_status:
 
   epic-4: in-progress
   4-1-final-baseline-re-verification: done
-  4-2-regression-burn-down: backlog
+  4-2-regression-burn-down: review
   4-3-maintenance-checklist-publication: backlog
   4-4-operational-handoff-snapshot: backlog
   epic-4-retrospective: optional
