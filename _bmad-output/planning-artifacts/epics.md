@@ -335,3 +335,34 @@ So that future maintenance starts with clear context and evidence.
 **When** the closure snapshot is written
 **Then** it includes current verification status, known deferred items, and upgrade ledger links
 **And** the next maintenance cycle can start without reconstructing prior decisions.
+
+## Epic 5: Cycle Follow-Up and Tech Debt Reduction
+
+Address the highest-priority deferred items from the Q3 2026 cycle retrospective to reduce crash risk and close feature gaps.
+**FRs covered:** FR2, FR6, FR10
+
+### Story 5.1: Lightbox Index Bounds Guard
+
+As a visitor,
+I want Lightbox navigation to never crash even if the photo index is out of bounds,
+So that browsing remains stable under any state condition.
+
+**Acceptance Criteria:**
+
+**Given** a Lightbox is open with a current photo index
+**When** an out-of-bounds index occurs (e.g., index >= photos.length)
+**Then** the Lightbox displays a safe fallback or closes gracefully
+**And** no runtime error propagates.
+
+### Story 5.2: Year Filter Clear/All Button
+
+As a visitor,
+I want a way to clear the year filter and see all photos,
+So that I can navigate back to the full gallery without reloading the page.
+
+**Acceptance Criteria:**
+
+**Given** a year filter is active
+**When** the visitor clicks "All" or "Clear" in the navigation
+**Then** `selectedYear` is set to `null`
+**And** all photos are displayed without filtering.

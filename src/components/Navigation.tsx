@@ -17,6 +17,15 @@ export default function Navigation() {
       <Navbar.Toggle/>
       <Navbar.Collapse>
         <Nav className="me-auto">
+          <Nav.Link
+            onClick={(e) => {
+              e.preventDefault();
+              handleYearClick(null);
+            }}
+            active={year === null}
+          >
+            All
+          </Nav.Link>
           {availableYears.map((yearValue) => (
             <Nav.Link
               key={yearValue}

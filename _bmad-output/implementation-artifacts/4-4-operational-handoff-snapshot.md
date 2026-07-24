@@ -141,3 +141,4 @@ TBD
 - Created operational-handoff-snapshot.md as the cycle capstone document
 - Summary table, deferred upgrades, process gaps, artifact index, and next-cycle prerequisites all included
 - Epic 4 closes with this story
+- Final commit SHA: 43d832e (all 4.3 and 4.4 changes committed)

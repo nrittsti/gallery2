@@ -1,7 +1,7 @@
 # Operational Handoff Snapshot — Gallery Q3 2026
 
 **Created:** 2026-07-24
-**Final Commit SHA:** 38dfd3f
+**Final Commit SHA:** 43d832e
 **Cycle:** Gallery Reliability, Testing, Modernization, and Closure (Epic 1-4)
 
 ---
@@ -32,7 +32,7 @@
 
 ## Verification Results
 
-All gates pass on release candidate (commit `38dfd3f`):
+All gates pass on release candidate (commit `43d832e`):
 
 | Gate | Result | Detail |
 |------|--------|--------|
