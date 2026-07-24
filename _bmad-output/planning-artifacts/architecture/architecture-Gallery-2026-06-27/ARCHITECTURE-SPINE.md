@@ -136,5 +136,5 @@ tests/
 ## Deferred
 
 - Choosing the exact unit-test folder layout and helper abstractions (decidable during FR-4 implementation as long as AD-3 gate contract is preserved).
-- Choosing long-term home for maintenance checklist (`README` vs dedicated docs page) pending owner preference.
+- ~~Choosing long-term home for maintenance checklist (`README` vs dedicated docs page) pending owner preference.~~ **Resolved during Story 4.3** — `MAINTENANCE.md` at project root is the canonical location.
 - Deciding whether to introduce automated dependency bot tooling (Dependabot/Renovate) after this cycle; current spine governs manual Upgrade Batch flow only.

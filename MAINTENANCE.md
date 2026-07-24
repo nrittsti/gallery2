@@ -93,3 +93,12 @@ If production has issues after deployment:
 1. **Quick rollback:** Use the previous CI run's build artifact and upload manually via FTP
 2. **Git rollback:** `git revert -m 1 HEAD` (for merge commits) or `git revert HEAD~N..HEAD` (for multi-commit ranges) on main, push, then re-deploy
 3. **After rollback:** Investigate root cause, fix, test, re-deploy
+
+## Cycle Artifacts
+
+For context from the Q3 2026 maintenance cycle:
+
+- **Deferred major upgrades:** See [`_bmad-output/implementation-artifacts/deferred-major-ledger.md`](_bmad-output/implementation-artifacts/deferred-major-ledger.md) — rationale and revisit triggers for vitest 5.x, TypeScript 7.x, and coupled packages
+- **Regression closure log:** See [`_bmad-output/implementation-artifacts/regression-closure-log.md`](_bmad-output/implementation-artifacts/regression-closure-log.md) — all 48 issues tracked across the cycle
+- **Upgrade batch evidence:** See [`_bmad-output/implementation-artifacts/templates/upgrade-batch-evidence.md`](_bmad-output/implementation-artifacts/templates/upgrade-batch-evidence.md) — batch workflow and evidence template
+- **Final verification:** See [`_bmad-output/implementation-artifacts/final-baseline-verification.md`](_bmad-output/implementation-artifacts/final-baseline-verification.md) — all gates pass on release candidate

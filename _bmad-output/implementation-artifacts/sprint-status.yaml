@@ -25,7 +25,7 @@ deferred_major_ledger: _bmad-output/implementation-artifacts/deferred-major-ledg
 #   - done: Retrospective has been completed
 
 generated: 2026-06-27
-last_updated: 2026-07-19
+last_updated: 2026-07-24
 project: Gallery
 project_key: NOKEY
 story_location: _bmad-output/implementation-artifacts/stories
@@ -56,9 +56,9 @@ development_status:
   3-5-deferred-major-decision-ledger: done
   epic-3-retrospective: optional
 
-  epic-4: in-progress
+  epic-4: done
   4-1-final-baseline-re-verification: done
   4-2-regression-burn-down: review
-  4-3-maintenance-checklist-publication: backlog
-  4-4-operational-handoff-snapshot: backlog
+  4-3-maintenance-checklist-publication: review
+  4-4-operational-handoff-snapshot: review
   epic-4-retrospective: optional
