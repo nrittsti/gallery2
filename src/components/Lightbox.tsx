@@ -17,7 +17,7 @@ export default function Lightbox() {
   }, [setShow, setIndex]);
 
   const next = useCallback(() => {
-    setIndex((prev) => Math.min(prev + 1, photos.length - 1));
+    setIndex((prev) => Math.max(Math.min(prev + 1, photos.length - 1), 0));
   }, [setIndex, photos.length]);
 
   const prev = useCallback(() => {
@@ -93,8 +93,8 @@ export default function Lightbox() {
     }
   };
 
+  if (index < 0 || index >= photos.length) return null;
   const photo = photos[index];
-  if (!photo) return null;
 
   const valueOrFallback = (val: string | undefined | null): string => {
     return val?.trim() || "\u2014";
