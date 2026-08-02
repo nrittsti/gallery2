@@ -153,7 +153,7 @@ test.describe('Gallery and Lightbox Tests', () => {
     const yearTexts = await yearLinks.allTextContents();
     const years = yearTexts.map((t) => parseInt(t.trim()));
     years.sort((a, b) => a - b);
-    expect(years).toEqual([2022, 2023, 2024, 2025]);
+    expect(years).toEqual([2022, 2023, 2024, 2025, 2026]);
   });
 
   test('Lightbox correctly reflects filter changes across sessions', async () => {

@@ -53,3 +53,13 @@
 - eslint-plugin-react-refresh 0.4→0.5 semver-breaking not verified — empirically verified by passing lint
 - wait-on 9.x breaking changes not documented — empirically verified by passing e2e tests
 - Vitest 4.x on Vite 8.x compatibility not explicitly verified — empirically verified by passing unit tests
+
+## Deferred from: one-shot review of year-filter test update for 2026 photos (2026-08-02)
+
+- Year-list expectation hardcoded `[2022, 2023, 2024, 2025, 2026]` instead of derived from photos.json — will break again when 2027 photos arrive; consistent with the project's accepted "data-dependent values acceptable for E2E" stance
+- No behavior assertion for the new 2026 filter (count / lightbox total) — only link membership checked
+- "All" view (254 photos) never asserted — every total assertion exercises the default 2025 view
+- 2026 batch metadata data quality: `"Futjifilm"` typo in make/cameramodelname, lowercase `"samsung"`, 3 entries missing `make`, plus gaps in aperturevalue/focallengthin35mmformat/flash/lensmodel — render as `—` fallbacks silently
+- Tests coupled to hardcoded default filter `useState<number | null>(2025)` in App.tsx:12 — undocumented latent coupling
+- Clamp test (lines 171-196) uses raw DOM probe + 500ms waitForTimeout and fixed 68 iterations — fragile against react-bootstrap DOM and data growth
+- Year-links test sorts scraped years before comparing, so UI ordering regressions go undetected
