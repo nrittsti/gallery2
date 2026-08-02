@@ -1,4 +1,20 @@
 import type { Page } from '@playwright/test';
+import photosData from '../../src/assets/photos.json' with { type: 'json' };
+import type { PhotoProps } from '../../src/types/PhotoProps';
+import { DEFAULT_YEAR } from '../../src/constants';
+
+const photos = photosData as PhotoProps[];
+
+export const expectedYearsAscending = (): number[] => {
+  const years = new Set(photos.map((p) => p.year).filter((y) => y != null));
+  return [...years].sort((a, b) => a - b);
+};
+
+export const photosForYear = (year: number): number =>
+  photos.filter((p) => p.year === year).length;
+
+export const defaultYearPhotosCount = (): number =>
+  photos.filter((p) => p.year === DEFAULT_YEAR).length;
 
 export class GalleryPage {
   private page: Page;

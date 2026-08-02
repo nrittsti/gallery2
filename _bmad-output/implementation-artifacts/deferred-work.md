@@ -63,3 +63,12 @@
 - Tests coupled to hardcoded default filter `useState<number | null>(2025)` in App.tsx:12 — undocumented latent coupling
 - Clamp test (lines 171-196) uses raw DOM probe + 500ms waitForTimeout and fixed 68 iterations — fragile against react-bootstrap DOM and data growth
 - Year-links test sorts scraped years before comparing, so UI ordering regressions go undetected
+
+## Deferred from: review of data-driven e2e year/count refactor (2026-08-02)
+
+- DEFAULT_YEAR remains a constant in src/constants.ts (2025) rather than being derived from the latest available year — app still opens on 2025 after future years are added; product decision, see spec
+- Resilience test targets hardcoded index 21 (default-year 2025 photo with absent lensmodel/aperturevalue) — survives 2027 additions only because 2025 ordering is unchanged; breaks if the default year ever changes
+- Clamp test clicks the literal 2022 filter link — encodes "2022 count < default-year count"; breaks if data is rebalanced so 2022 >= default-year count
+- E2E now derives every expectation from photos.json, so data regressions (wrong year assignment, dropped year, duplicate) pass silently — no unit test pins real per-year counts; a data-integrity test is the mitigation
+- `with { type: 'json' }` import attribute in tests/e2e/helpers.ts is inconsistent with src/utils/photos.ts and unit tests which import the same JSON without the attribute — stylistic; unify later if desired
+- eslint . lints generated coverage/ output (3 warnings) — pre-existing config gap, unrelated to this change
