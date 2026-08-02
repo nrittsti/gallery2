@@ -65,4 +65,5 @@ development_status:
 
   epic-5: backlog
   5-1-lightbox-index-bounds-guard: done
-  5-2-year-filter-clear-button: review
+  5-2-year-filter-clear-button: done
+  5-3-carry-over-gaps-disposition: ready-for-dev

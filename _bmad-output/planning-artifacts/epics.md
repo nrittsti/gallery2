@@ -366,3 +366,16 @@ So that I can navigate back to the full gallery without reloading the page.
 **When** the visitor clicks "All" or "Clear" in the navigation
 **Then** `selectedYear` is set to `null`
 **And** all photos are displayed without filtering.
+
+### Story 5.3: Carry-Over Gaps Disposition Decision
+
+As Nico,
+I want a clear decision on each carry-over gap from the Q3 2026 cycle,
+So that they are either resolved or explicitly accepted as permanent project standards.
+
+**Acceptance Criteria:**
+
+**Given** three carry-over gaps were deferred across the cycle (no Safari e2e, no npm audit, no performance thresholds)
+**When** each gap is reviewed
+**Then** a decision is recorded: either implement the gap, or permanently accept it as a project standard
+**And** the decision is documented in ARCHITECTURE-SPINE.md or a project standards doc.
