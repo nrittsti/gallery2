@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { GalleryPage, measurePerformance, expectedYearsAscending, photosForYear, defaultYearPhotosCount } from './helpers';
+import { GalleryPage, measurePerformance, expectedYearsAscending, photosForYear, defaultYearPhotosCount, firstDefaultYearPhotoWithAbsentMetadata } from './helpers';
 
 test.describe('Gallery and Lightbox Tests', () => {
   let galleryPage: GalleryPage;
@@ -200,10 +200,9 @@ test.describe('Gallery and Lightbox Tests', () => {
     const isOpen = await galleryPage.isLightboxOpen();
     expect(isOpen).toBeTruthy();
 
-    // Navigate through several photos to exercise boundary conditions
-    // targeting a photo with absent metadata fields (index 21 has lensmodel and aperturevalue absent)
-    const { total } = await galleryPage.getCurrentPhotoInfo();
-    const targetIndex = Math.min(21, total - 1);
+    // Navigate to the first default-year photo with absent metadata fields
+    // to exercise the em-dash fallback rendering
+    const targetIndex = firstDefaultYearPhotoWithAbsentMetadata();
     for (let i = 0; i < targetIndex; i++) {
       await galleryPage.navigateLightboxNext();
     }

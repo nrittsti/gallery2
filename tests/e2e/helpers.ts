@@ -16,6 +16,25 @@ export const photosForYear = (year: number): number =>
 export const defaultYearPhotosCount = (): number =>
   photos.filter((p) => p.year === DEFAULT_YEAR).length;
 
+export const firstDefaultYearPhotoWithAbsentMetadata = (): number => {
+  const sorted = photos
+    .filter((p) => p.year === DEFAULT_YEAR)
+    .sort((a, b) => b.file.localeCompare(a.file));
+  const fallbackFields = [
+    'createdate',
+    'cameramodelname',
+    'lensmodel',
+    'focallengthin35mmformat',
+    'aperturevalue',
+    'exposuretime',
+    'iso',
+    'flash',
+  ];
+  return sorted.findIndex((p) =>
+    fallbackFields.some((f) => !String(p[f as keyof PhotoProps] || '').trim()),
+  );
+};
+
 export class GalleryPage {
   private page: Page;
 

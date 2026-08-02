@@ -11,15 +11,15 @@ route: 'one-shot'
 
 ## Intent
 
-**Problem:** The Playwright tests hardcoded year lists (`[2022, 2023, 2024, 2025, 2026]`) and per-year counts (43, 63, 69), so every time a new year of photos lands in `src/assets/photos.json` the tests break and need a manual edit.
+**Problem:** The Playwright tests hardcoded year lists (`[2022, 2023, 2024, 2025, 2026]`), per-year counts (43, 63, 69), and a fixed default-year index (21), so every new year of photos in `src/assets/photos.json` broke the tests and required a manual edit.
 
-**Approach:** Derive all year/count expectations in the tests from the same `photos.json` the app renders, so future years (2027+) are supported automatically. The app's default selected year is extracted into a shared `DEFAULT_YEAR` constant so tests reference the same source of truth as `App.tsx`.
+**Approach:** Derive all year/count/index expectations in the tests from the same `photos.json` the app renders, so future years (2027+) are supported automatically. The app's default selected year is derived from the data (`getAvailableYears(allPhotos)[0]`), so the gallery auto-opens on the newest year and tests share the same source of truth.
 
 ## Suggested Review Order
 
-**Shared default-year constant**
+**Data-derived default year**
 
-- Default selected year moved to a single source both the app and tests read
+- Default selected year computed from the latest available year in photos.json; shared by app and tests
   [`constants.ts:1`](../../src/constants.ts#L1)
   [`App.tsx:14`](../../src/App.tsx#L14)
 
@@ -30,5 +30,5 @@ route: 'one-shot'
 
 **Spec assertions now data-driven**
 
-- Year list, per-year counts, default-year total, and clamp math all use the derived helpers
+- Year list, per-year counts, default-year total, clamp math, and the resilience target index all use the derived helpers
   [`gallery-lightbox.spec.ts:138`](../../tests/e2e/gallery-lightbox.spec.ts#L138)

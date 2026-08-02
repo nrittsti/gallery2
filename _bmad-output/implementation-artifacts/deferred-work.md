@@ -72,3 +72,9 @@
 - E2E now derives every expectation from photos.json, so data regressions (wrong year assignment, dropped year, duplicate) pass silently — no unit test pins real per-year counts; a data-integrity test is the mitigation
 - `with { type: 'json' }` import attribute in tests/e2e/helpers.ts is inconsistent with src/utils/photos.ts and unit tests which import the same JSON without the attribute — stylistic; unify later if desired
 - eslint . lints generated coverage/ output (3 warnings) — pre-existing config gap, unrelated to this change
+
+## Resolved: 2026-08-02 (DEFAULT_YEAR now data-derived + resilience test data-driven)
+
+- DEFAULT_YEAR is now derived from the latest available year in photos.json (getAvailableYears(allPhotos)[0] via src/constants.ts) — app auto-opens on the newest year, tests read the same source of truth
+- Resilience test no longer targets hardcoded index 21 — derives the first default-year photo with absent metadata via firstDefaultYearPhotoWithAbsentMetadata() in tests/e2e/helpers.ts
+- JSON import attribute inconsistency resolved — src/utils/photos.ts now also imports with `{ type: 'json' }`, consistent with tests/e2e/helpers.ts
