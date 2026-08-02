@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { GalleryPage, measurePerformance } from './helpers';
+import { GalleryPage, measurePerformance, expectedYearsAscending, photosForYear, defaultYearPhotosCount, firstDefaultYearPhotoWithAbsentMetadata } from './helpers';
 
 test.describe('Gallery and Lightbox Tests', () => {
   let galleryPage: GalleryPage;
@@ -136,47 +136,46 @@ test.describe('Gallery and Lightbox Tests', () => {
   });
 
   test('Year filter should change gallery card count', async () => {
-    const cardCount = await galleryPage.getGalleryCardCount();
-
     await galleryPage.clickYearFilter(2022);
     const count2022 = await galleryPage.getGalleryCardCount();
-    expect(count2022).toBeLessThan(cardCount);
-    expect(count2022).toBe(43);
+    expect(count2022).toBe(photosForYear(2022));
+    expect(photosForYear(2022)).toBeLessThan(defaultYearPhotosCount());
 
     await galleryPage.clickYearFilter(2023);
     const count2023 = await galleryPage.getGalleryCardCount();
-    expect(count2023).toBe(63);
+    expect(count2023).toBe(photosForYear(2023));
   });
 
   test('Year filter links should be derived from data and include all years', async () => {
     const yearLinks = await galleryPage.getYearFilterLinks();
     const yearTexts = await yearLinks.allTextContents();
-    const years = yearTexts.map((t) => parseInt(t.trim()));
+    const years = yearTexts.map((t) => Number(t.trim()));
     years.sort((a, b) => a - b);
-    expect(years).toEqual([2022, 2023, 2024, 2025]);
+    expect(years).toEqual(expectedYearsAscending());
   });
 
   test('Lightbox correctly reflects filter changes across sessions', async () => {
     await galleryPage.clickFirstGalleryImage();
     const info1 = await galleryPage.getCurrentPhotoInfo();
-    expect(info1.total).toBe(69);
+    expect(info1.total).toBe(defaultYearPhotosCount());
 
     await galleryPage.closeLightbox();
     await galleryPage.clickYearFilter(2022);
     await galleryPage.clickFirstGalleryImage();
     const info2 = await galleryPage.getCurrentPhotoInfo();
-    expect(info2.total).toBe(43);
+    expect(info2.total).toBe(photosForYear(2022));
   });
 
   test('Lightbox clamps index when filter changes reduce photo count', async ({ page }) => {
     await galleryPage.clickFirstGalleryImage();
     const info1 = await galleryPage.getCurrentPhotoInfo();
-    expect(info1.total).toBe(69);
+    const defaultCount = defaultYearPhotosCount();
+    expect(info1.total).toBe(defaultCount);
 
-    for (let i = 0; i < 68; i++) {
+    for (let i = 0; i < defaultCount - 1; i++) {
       await galleryPage.navigateLightboxNext();
     }
-    expect((await galleryPage.getCurrentPhotoInfo()).current).toBe(69);
+    expect((await galleryPage.getCurrentPhotoInfo()).current).toBe(defaultCount);
 
     // Programmatically click 2022 filter through modal overlay
     await page.evaluate(() => {
@@ -191,8 +190,8 @@ test.describe('Gallery and Lightbox Tests', () => {
 
     await page.waitForTimeout(500);
     const infoAfter = await galleryPage.getCurrentPhotoInfo();
-    expect(infoAfter.current).toBe(43);
-    expect(infoAfter.total).toBe(43);
+    expect(infoAfter.current).toBe(photosForYear(2022));
+    expect(infoAfter.total).toBe(photosForYear(2022));
   });
 
   test('Lightbox resilience: renders without crash and metadata has fallback values', async ({ page }) => {
@@ -201,15 +200,14 @@ test.describe('Gallery and Lightbox Tests', () => {
     const isOpen = await galleryPage.isLightboxOpen();
     expect(isOpen).toBeTruthy();
 
-    // Navigate through several photos to exercise boundary conditions
-    // targeting a photo with known null metadata fields (index 21 has lensmodel and aperturevalue null)
-    const { total } = await galleryPage.getCurrentPhotoInfo();
-    const targetIndex = Math.min(21, total - 1);
+    // Navigate to the first default-year photo with absent metadata fields
+    // to exercise the em-dash fallback rendering
+    const targetIndex = firstDefaultYearPhotoWithAbsentMetadata();
     for (let i = 0; i < targetIndex; i++) {
       await galleryPage.navigateLightboxNext();
     }
 
-    // Verify all 8 EXIF metadata fields have content (including fallback)
+    // Verify all 9 EXIF metadata fields have content (including fallback)
     const metadata = await galleryPage.getExifMetadata();
     const expectedLabels = [
       'Photo was taken',
@@ -227,7 +225,7 @@ test.describe('Gallery and Lightbox Tests', () => {
       expect(metadata[label]!.length).toBeGreaterThan(0);
     }
 
-    // Verify the em-dash fallback character is rendered for null metadata fields
+    // Verify the em-dash fallback character is rendered for absent metadata fields
     const fallbackCount = await page.locator('.exif-value').filter({ hasText: '—' }).count();
     expect(fallbackCount).toBeGreaterThan(0);
 

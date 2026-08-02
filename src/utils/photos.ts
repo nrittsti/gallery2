@@ -1,4 +1,4 @@
-import photosData from "../assets/photos.json";
+import photosData from "../assets/photos.json" with { type: "json" };
 import type {PhotoProps} from "../types/PhotoProps.tsx";
 
 export const allPhotos = photosData as PhotoProps[];

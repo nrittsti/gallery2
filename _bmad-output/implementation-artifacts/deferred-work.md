@@ -53,3 +53,28 @@
 - eslint-plugin-react-refresh 0.4→0.5 semver-breaking not verified — empirically verified by passing lint
 - wait-on 9.x breaking changes not documented — empirically verified by passing e2e tests
 - Vitest 4.x on Vite 8.x compatibility not explicitly verified — empirically verified by passing unit tests
+
+## Deferred from: one-shot review of year-filter test update for 2026 photos (2026-08-02)
+
+- Year-list expectation hardcoded `[2022, 2023, 2024, 2025, 2026]` instead of derived from photos.json — will break again when 2027 photos arrive; consistent with the project's accepted "data-dependent values acceptable for E2E" stance
+- No behavior assertion for the new 2026 filter (count / lightbox total) — only link membership checked
+- "All" view (254 photos) never asserted — every total assertion exercises the default 2025 view
+- 2026 batch metadata data quality: `"Futjifilm"` typo in make/cameramodelname, lowercase `"samsung"`, 3 entries missing `make`, plus gaps in aperturevalue/focallengthin35mmformat/flash/lensmodel — render as `—` fallbacks silently
+- Tests coupled to hardcoded default filter `useState<number | null>(2025)` in App.tsx:12 — undocumented latent coupling
+- Clamp test (lines 171-196) uses raw DOM probe + 500ms waitForTimeout and fixed 68 iterations — fragile against react-bootstrap DOM and data growth
+- Year-links test sorts scraped years before comparing, so UI ordering regressions go undetected
+
+## Deferred from: review of data-driven e2e year/count refactor (2026-08-02)
+
+- DEFAULT_YEAR remains a constant in src/constants.ts (2025) rather than being derived from the latest available year — app still opens on 2025 after future years are added; product decision, see spec
+- Resilience test targets hardcoded index 21 (default-year 2025 photo with absent lensmodel/aperturevalue) — survives 2027 additions only because 2025 ordering is unchanged; breaks if the default year ever changes
+- Clamp test clicks the literal 2022 filter link — encodes "2022 count < default-year count"; breaks if data is rebalanced so 2022 >= default-year count
+- E2E now derives every expectation from photos.json, so data regressions (wrong year assignment, dropped year, duplicate) pass silently — no unit test pins real per-year counts; a data-integrity test is the mitigation
+- `with { type: 'json' }` import attribute in tests/e2e/helpers.ts is inconsistent with src/utils/photos.ts and unit tests which import the same JSON without the attribute — stylistic; unify later if desired
+- eslint . lints generated coverage/ output (3 warnings) — pre-existing config gap, unrelated to this change
+
+## Resolved: 2026-08-02 (DEFAULT_YEAR now data-derived + resilience test data-driven)
+
+- DEFAULT_YEAR is now derived from the latest available year in photos.json (getAvailableYears(allPhotos)[0] via src/constants.ts) — app auto-opens on the newest year, tests read the same source of truth
+- Resilience test no longer targets hardcoded index 21 — derives the first default-year photo with absent metadata via firstDefaultYearPhotoWithAbsentMetadata() in tests/e2e/helpers.ts
+- JSON import attribute inconsistency resolved — src/utils/photos.ts now also imports with `{ type: 'json' }`, consistent with tests/e2e/helpers.ts

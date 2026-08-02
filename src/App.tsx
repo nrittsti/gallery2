@@ -6,10 +6,11 @@ import {useState} from "react";
 import './App.css'
 import {FilterContext, LightboxContext} from "./context/GalleryContext.tsx";
 import Lightbox from "./components/Lightbox.tsx";
+import {DEFAULT_YEAR} from "./constants.ts";
 
 
 function App() {
-  const [selectedYear, setSelectedYear] = useState<number | null>(2025);
+  const [selectedYear, setSelectedYear] = useState<number | null>(DEFAULT_YEAR);
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number>(0);
   const [showLightbox, setShowLightbox] = useState<boolean>(false);
   return (

@@ -4,7 +4,7 @@ baseline_commit: c36fac6
 
 # Story 5.2: Year Filter Clear/All Button
 
-Status: review
+Status: done
 
 ## Tasks
 
